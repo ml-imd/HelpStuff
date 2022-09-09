@@ -130,7 +130,7 @@ def analyze(path, method, file_name, parameters = {}, k_range = None, seed_value
         print("MemoryError in " + path)
 
 
-# In[17]:
+# In[8]:
 
 
 def export(path, method, k = None, seed = None, label_col = None, parameters = {}):
@@ -165,11 +165,16 @@ def export(path, method, k = None, seed = None, label_col = None, parameters = {
 # In[13]:
 
 
-def analyzeAll(path, k_range, seed_values, label_col = None):
+def analyzeAll(path, k_range, seed_values, label_col = None, algorithms = None):
     file_name = fileNameFromPath(path) + '_' + 'k' + str(k_range) +'_' + 'seed' + str(seed_values) + '.csv'
     have_none = ["DBSCAN", "OPTICS", "MeanShift"]
     have_k = ["AgglomerativeClustering", "Birch"]
     have_seed_and_k = ["KMeans", "MiniBatchKMeans", "GaussianMixture"]
+    
+    if algorithms is not None:
+        have_none = list(set(have_none) & set(algorithms))
+        have_k = list(set(have_k) & set(algorithms))
+        have_seed_and_k = list(set(have_seed_and_k) & set(algorithms))
     
     for method in have_seed_and_k:
         analyze(path, method, file_name, k_range = k_range, seed_values = seed_values, label_col = label_col, parameters = {})

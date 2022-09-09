@@ -15,6 +15,8 @@ array  - <parametros da tarefa> => "analyzeAll": <range de k para o numero de cl
 dict   - <parametros opcionais> => "export"    : { "k"          : <número de agrupamentos> - int
 				                   "seed"       : <seed para inicialização do centroide> - int
 						   "parameters" : <outros parametros do algoritmo no scikit-learn> - dict
+				   "analyzeAll": { "label_col"  : <nome da coluna de rótulo, se houver> - str
+                                                   "algorithms" : <lista de métodos para rodar a análise> - list
 
 
 
