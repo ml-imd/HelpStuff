@@ -1,5 +1,5 @@
-# Algortimo para fazer vários testes de diferentes modelos de regressão
-A última coluna dos datasets passados irão ser a variável de alvo y
+# Algortimo para experimentação de diferentes modelos de classficação
+**A última coluna dos datasets passados irão ser a variável de alvo y**
 ### Parâmetros
 ```bash
 -h, --help
@@ -19,7 +19,7 @@ Lista com métodos de separação, caso deseja utilizar Holdout basta colocar o 
 ```bash
 -me, --metrics
 ```
-Métricas utilizadas para avaliar o modelo, erros podem acontecer pois algumas são apenas para classificação binária. Ex: `-me "[acc,f1,confusion_matrix]"`
+Métricas utilizadas para avaliar o modelo, erros podem acontecer pois algumas são apenas para classificação binária, na versão atual parâmetros não são aceitados. Ex: `-me "[acc,f1,confusion_matrix]"`
 Lista de métricas disponíveis:
 - accuracy
 - acc
@@ -47,8 +47,8 @@ Lista de métricas disponíveis:
 ```
 -mo, --model
 ```
-Lista com modelos utilizados. Ex: `-mo "
-[rf,knn,AdaBoostClassifier]"`. Modelos disponíveis:
+Lista com modelos utilizados. Ex: `-mo "[rf(),knn(n_neighbors=3,algorithm=ball_t
+ree),AdaBoostClassifier()]"`. Na versão atual os parâmetros possuem a limitação de só aceitarem valores que são strings ou valores numéricos. Lista de modelos disponíveis:
 - knn ou KNeighborsClassifier
 - RandomForestClassifier ou rf
 - MLPClassifier ou mlp
@@ -75,9 +75,10 @@ Lista com modelos utilizados. Ex: `-mo "
 ```
 -n, --name
 ```
-Nome do arquivo gerado.
+Nome do arquivo gerado. Os arquivos são gerados no formato pickle pois este armazena o tipo de variável o que torna viável abrir o arquivo quando entre as métricas tem a matriz de confusão.
 
 ### Exemplo de aplicação
 ```bash
-python .\classification_exp.py -f "[.\datasets\iris.data,.\datasets\cancer.data]"  -s "[3,0.3,0.15]" -me "[acc]" -mo "[rf,knn,AdaBoostClassifier]" -n experimentos_finais
+python .\classification_exp_teste.py -f ".\datasets"  -s "[3,0.3,0.15]" -me "[acc,matrix]" -mo "[rf(),knn(n_neighbors=3,algorithm=ball_t
+ree),AdaBoostClassifier()]" -n experimentos_finais
 ```
