@@ -13,6 +13,7 @@ import os
 import ast
 import time
 from datetime import timedelta
+import sys
 
 resultados = {"dataset":[],
                   "metodo":[],
@@ -56,21 +57,14 @@ estimators['mlp'] = estimators['MLPClassifier']
 estimators['rf'] = estimators['RandomForestClassifier']
 estimators['nb'] = estimators['GaussianNB']
 
+
 def ajuda():
   var = []
   lista_est = list(estimators.keys())
-  for k in lista_est:
-    var.append(k)
-    lista_est.remove(k)
-    for k1 in lista_est:
-      if estimators[k] == estimators[k1]:
-        var[-1]+=f' ou {k1}'
-        var = var[-1:] + var[:-1]
-        lista_est.remove(k1)
   print ('classification_exp.py <arquivo> <modelos>')
   print('Para seleção dos métodos de separação caso o número seja inteiro ele será um Kfold, caso contrário holdout')
   print('Métricas disponíveis:', *metricas.keys(), sep='\n- ')
-  print('Modelos disponíveis:',*var, sep='\n- ')
+  print('Modelos disponíveis:',*lista_est, sep='\n- ')
   return
 
 def converter_paths(paths):
@@ -80,8 +74,8 @@ def converter_paths(paths):
     res = []
     for file_path in os.listdir(paths):
       if os.path.isfile(os.path.join(paths, file_path)):
-          if paths[-1] != '"\\"':
-            paths+='\\'
+          if paths[-1] != "/":
+            paths+='/'
           res.append(paths+file_path)
     return res
   else:
@@ -137,7 +131,7 @@ if __name__ == "__main__":
   for i in range(1,len(sys.argv)):
     if sys.argv[i] == '-h' or sys.argv[i] == '--help':
       ajuda()
-      break
+      sys.exit()
     if sys.argv[i] == '--file' or sys.argv[i] == '-f':
       input_paths = converter_paths(sys.argv[i+1])
       print(f'{len(input_paths)} datasets:\n', *input_paths, sep=' | ')
